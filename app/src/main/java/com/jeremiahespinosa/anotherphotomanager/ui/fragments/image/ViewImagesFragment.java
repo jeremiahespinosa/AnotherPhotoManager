@@ -38,7 +38,6 @@ import java.io.File;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 /**
  * Created by jespinosa on 2/14/16.
@@ -73,14 +72,14 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
         super.onViewCreated(view, savedInstanceState);
 
         viewImagesPresenter = new ViewImagesPresenterImpl();
+        viewImagesPresenter.setImagesView(this);
 
         if(getArguments() != null){
             photo = (Photo)getArguments().getParcelable(BaseConstants.PHOTO_EXTRA);
 
-            viewImagesPresenter.setImagesView(this);
-
             if(photo != null){
 
+                //get window to update status bar color
                 final Window window = getActivity().getWindow();
 
                 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -91,6 +90,7 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
 
                 photoTitleTextView.setText(photo.getTitle());
 
+                //load the image then update ui elements based on colors in image
                 Glide.with(getActivity())
                         .load(photo.getUrl())
                         .asBitmap()
@@ -138,9 +138,6 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
 
     @OnClick(R.id.fab)
     public void downloadImage(){
-
-        Timber.i("clicked fab");
-
         if (Build.VERSION.SDK_INT >= 23) {
             // Marshmallow+
             checkPermissionThenDownload();
@@ -184,7 +181,6 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
             }
         }
         else{
-            Timber.i("pre task");
             downloadImageTask();
         }
     }
@@ -217,7 +213,6 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
     }
 
     private void downloadImageTask(){
-        Timber.d("download task");
         viewImagesPresenter.downloadImage(photo);
     }
 

@@ -64,10 +64,6 @@ public class HomeFragment extends BaseFragment implements HomeView{
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         //check arguments to see what type of loading we need to do
 
-        //if downloads then we are going to have to look at file structure to see how to build our ui
-
-        //if Home then we are going to load from the cloud
-
         if(getArguments() != null && getArguments().containsKey(BaseConstants.EXTRA_FRAGMENT_TITLE)){
             String fragmentType = getArguments().getString(BaseConstants.EXTRA_FRAGMENT_TITLE);
 
@@ -125,8 +121,7 @@ public class HomeFragment extends BaseFragment implements HomeView{
             recyclerView.setAdapter(albumsAdapter);
         }
         else{
-            EmptyPhotosAdapter emptyPhotosAdapter = new EmptyPhotosAdapter();
-            recyclerView.setAdapter(emptyPhotosAdapter);
+            showEmptyLayout();
         }
     }
 
