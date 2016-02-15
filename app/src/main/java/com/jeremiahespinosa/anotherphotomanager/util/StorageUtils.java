@@ -38,6 +38,7 @@ public class StorageUtils {
                 out.close();
             }
             catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

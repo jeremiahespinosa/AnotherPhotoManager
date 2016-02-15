@@ -11,10 +11,10 @@ import com.jeremiahespinosa.anotherphotomanager.R;
  */
 public class SystemUtil {
 
-    public static void startActivity(Context context, Intent intent, boolean isFinishPreviousActivity) {
+    public static void startActivity(Context context, Intent intent, boolean shouldFinishPrevActivity) {
         context.startActivity(intent);
         ((Activity) context).overridePendingTransition(R.animator.push_left_in, R.animator.push_left_out);
-        if (isFinishPreviousActivity)
+        if (shouldFinishPrevActivity)
             ((Activity) context).finish();
     }
 

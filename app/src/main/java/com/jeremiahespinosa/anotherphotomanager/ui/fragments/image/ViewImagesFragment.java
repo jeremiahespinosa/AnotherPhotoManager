@@ -28,8 +28,9 @@ import com.jeremiahespinosa.anotherphotomanager.R;
 import com.jeremiahespinosa.anotherphotomanager.app.App;
 import com.jeremiahespinosa.anotherphotomanager.app.BaseConstants;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
-import com.jeremiahespinosa.anotherphotomanager.presenter.photos.ViewImagesPresenter;
-import com.jeremiahespinosa.anotherphotomanager.presenter.photos.ViewImagesPresenterImpl;
+
+import com.jeremiahespinosa.anotherphotomanager.presenter.image.ViewImagesPresenter;
+import com.jeremiahespinosa.anotherphotomanager.presenter.image.ViewImagesPresenterImpl;
 import com.jeremiahespinosa.anotherphotomanager.ui.activities.ViewImageActivity;
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.base.BaseFragment;
 

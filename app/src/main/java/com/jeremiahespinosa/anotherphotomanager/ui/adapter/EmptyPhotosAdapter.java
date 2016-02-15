@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jeremiahespinosa.anotherphotomanager.R;
-import com.jeremiahespinosa.anotherphotomanager.data.api.PhotoResponse;
+import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,11 @@ import java.util.List;
  * Created by jespinosa on 2/13/16.
  */
 public class EmptyPhotosAdapter extends RecyclerView.Adapter<EmptyPhotosAdapter.ViewHolder> {
-    private List<PhotoResponse.DataEntity> mPhotos;
+    private List<Album> mPhotos;
 
     public EmptyPhotosAdapter() {
         mPhotos = new ArrayList<>();
-        mPhotos.add(new PhotoResponse.DataEntity());    //adding empty photo response
+        mPhotos.add(new Album());    //adding empty photo response
     }
 
     @Override

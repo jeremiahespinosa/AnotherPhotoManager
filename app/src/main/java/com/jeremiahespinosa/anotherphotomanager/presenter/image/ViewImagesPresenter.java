@@ -1,4 +1,4 @@
-package com.jeremiahespinosa.anotherphotomanager.presenter.photos;
+package com.jeremiahespinosa.anotherphotomanager.presenter.image;
 
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.image.ImagesView;

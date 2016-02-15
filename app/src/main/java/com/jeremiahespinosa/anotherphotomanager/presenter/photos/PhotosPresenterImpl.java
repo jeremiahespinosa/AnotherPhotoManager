@@ -53,33 +53,7 @@ public class PhotosPresenterImpl implements PhotosPresenter {
         })
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<ArrayList<String>>() {
-            @Override
-            public void onCompleted() {
-                Timber.i("completed task");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-
-                photosView.stopRefreshing();
-
-
-                photosView.hideProgressDialog();
-
-                photosView.showDialog("Error", "Error downloading the image", true);
-            }
-
-            @Override
-            public void onNext(ArrayList<String> photos) {
-                photosView.hideProgressDialog();
-
-                photosView.onLocalPhotosLoaded(photos);
-
-            }
-        });
-
+        .subscribe(new GetLocalImagesSubscriber());
     }
 
     @Override
@@ -90,5 +64,30 @@ public class PhotosPresenterImpl implements PhotosPresenter {
     @Override
     public void destroyView() {
         photosView = null;
+    }
+
+    private final class GetLocalImagesSubscriber extends Subscriber<ArrayList<String>>{
+        @Override
+        public void onCompleted() {
+            Timber.i("completed task");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+
+            photosView.stopRefreshing();
+
+            photosView.hideProgressDialog();
+
+            photosView.showDialog("Error", "Error downloading the image", true);
+        }
+
+        @Override
+        public void onNext(ArrayList<String> photos) {
+            photosView.hideProgressDialog();
+
+            photosView.onLocalPhotosLoaded(photos);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.jeremiahespinosa.anotherphotomanager.presenter.photos;
+package com.jeremiahespinosa.anotherphotomanager.presenter.image;
 
 import android.os.Environment;
 
@@ -42,15 +42,11 @@ public class ViewImagesPresenterImpl implements ViewImagesPresenter{
     public void downloadImage(Photo photo) {
         imagesView.showProgressDialog();
 
-        Timber.d("starting task to download");
-
          Observable.just(photo).map(new Func1<Photo, File>() {
             @Override
             public File call(Photo photo) {
                 File locAlbum = new File(Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES), App.getStringById(R.string.app_name).replace(" ", ""));
-
-                Timber.i("locAlbum: "+locAlbum.getPath());
 
                 if (!locAlbum.mkdirs()) {
                     Timber.e("Directory not created");
@@ -73,28 +69,30 @@ public class ViewImagesPresenterImpl implements ViewImagesPresenter{
             })
              .subscribeOn(Schedulers.io())
              .observeOn(AndroidSchedulers.mainThread())
-             .subscribe(new Subscriber<File>() {
-                 @Override
-                 public void onCompleted() {
-                     Timber.i("completed task");
-                 }
+             .subscribe(new DownloadImageSubscriber());
+    }
 
-                 @Override
-                 public void onError(Throwable e) {
-                     e.printStackTrace();
+    private final class DownloadImageSubscriber extends Subscriber<File>{
 
-                     imagesView.hideProgressDialog();
-                     imagesView.downloadingError("Error downloading the image");
-                 }
+        @Override
+        public void onCompleted() {
+            Timber.i("completed task");
+        }
 
-                 @Override
-                 public void onNext(File file) {
-                    imagesView.hideProgressDialog();
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
 
-                     imagesView.onImageDownloaded(file);
-                 }
-             });
+            imagesView.hideProgressDialog();
+            imagesView.downloadingError("Error downloading the image");
+        }
 
+        @Override
+        public void onNext(File file) {
+            imagesView.hideProgressDialog();
+
+            imagesView.onImageDownloaded(file);
+        }
     }
 
 }

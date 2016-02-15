@@ -32,60 +32,7 @@ public class HomePresenterImpl implements HomePresenter  {
                 .getCloudPhotos()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-
-                .subscribe(new Subscriber<List<PhotoEntity>>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.i("completed getting photos");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        home.hideProgressDialog();
-                        home.showError("Error loading images from the cloud");
-                    }
-
-                    @Override
-                    public void onNext(List<PhotoEntity> photoResponse) {
-
-                        LinkedHashMap<Integer, ArrayList<Photo>> linkedHashMap = new LinkedHashMap<>();
-
-                        ArrayList<Album> albums = new ArrayList<>();
-
-                        if (photoResponse != null && photoResponse.size() > 0) {
-
-                            for(PhotoEntity p : photoResponse){
-
-                                if(linkedHashMap.containsKey(p.getAlbumId())){
-                                    //album already in the mapping
-                                    //get the value and add a new photo to it
-                                    linkedHashMap.get(p.getAlbumId()).add(new Photo(p.getId(), p.getTitle(), p.getThumbnailUrl(), p.getUrl()));
-                                }
-                                else{
-                                    //album is not in the mapping
-                                    ArrayList<Photo> photos = new ArrayList<>();
-                                    photos.add(new Photo(p.getId(), p.getTitle(), p.getThumbnailUrl(), p.getUrl()));
-                                    linkedHashMap.put(p.getAlbumId(), photos);
-                                }
-                            }
-
-                            for(Map.Entry<Integer, ArrayList<Photo>> entry: linkedHashMap.entrySet()){
-                                albums.add(new Album(entry.getKey(), entry.getValue()));
-                            }
-
-                            home.viewLoaded(albums);
-                        }
-                        else {
-                            home.viewLoaded(null);
-                        }
-
-
-
-                        home.hideProgressDialog();
-
-                    }
-                });
+                .subscribe(new GetCloudImagesSubscriber());
     }
 
     @Override
@@ -96,5 +43,56 @@ public class HomePresenterImpl implements HomePresenter  {
     @Override
     public void destroyView() {
         home = null;
+    }
+
+    private final class GetCloudImagesSubscriber extends Subscriber<List<PhotoEntity>>{
+        @Override
+        public void onCompleted() {
+            Timber.i("completed getting photos");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            e.printStackTrace();
+            home.hideProgressDialog();
+            home.showError("Error loading images from the cloud");
+        }
+
+        @Override
+        public void onNext(List<PhotoEntity> photoResponse) {
+
+            if (photoResponse != null && photoResponse.size() > 0) {
+                LinkedHashMap<Integer, ArrayList<Photo>> linkedHashMap = new LinkedHashMap<>();
+
+                ArrayList<Album> albums = new ArrayList<>();
+
+                for(PhotoEntity p : photoResponse){
+
+                    if(linkedHashMap.containsKey(p.getAlbumId())){
+                        //album already in the mapping
+                        //get the value and add a new photo to it
+                        linkedHashMap.get(p.getAlbumId()).add(new Photo(p.getId(), p.getTitle(), p.getThumbnailUrl(), p.getUrl()));
+                    }
+                    else{
+                        //album is not in the mapping
+                        ArrayList<Photo> photos = new ArrayList<>();
+                        photos.add(new Photo(p.getId(), p.getTitle(), p.getThumbnailUrl(), p.getUrl()));
+                        linkedHashMap.put(p.getAlbumId(), photos);
+                    }
+                }
+
+                //converting to list of albums to simplify adapter usage
+                for(Map.Entry<Integer, ArrayList<Photo>> entry: linkedHashMap.entrySet()){
+                    albums.add(new Album(entry.getKey(), entry.getValue()));
+                }
+
+                home.viewLoaded(albums);
+            }
+            else {
+                home.viewLoaded(null);
+            }
+
+            home.hideProgressDialog();
+        }
     }
 }
