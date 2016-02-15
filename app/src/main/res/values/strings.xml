@@ -2,4 +2,12 @@
     <string name="app_name">Another Photo Manager</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="homeFragmentTitle">Home</string>
+    <string name="downloadsFragmentTitle">Downloads</string>
+    <string name="emptyPhotos">No photos found</string>
+    <string name="positive_button">Okay</string>
+    <string name="images_count_formatted">%1$d Images</string>
+    <string name="album_number_formatted">Album %1$d</string>
+
+    <string name="albums_overview_to_album">ALBUMS_TRANSITION</string>
 </resources>
