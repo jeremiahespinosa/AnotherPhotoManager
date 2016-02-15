@@ -104,6 +104,7 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
 
                                         Palette.Swatch vibrant = palette.getDarkMutedSwatch();
 
+                                        //attempt to update ui elements based on image color
                                         if (vibrant != null && window != null) {
 
                                             int colorFrom = window.getStatusBarColor();

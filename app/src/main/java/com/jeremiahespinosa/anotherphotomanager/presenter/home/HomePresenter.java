@@ -7,7 +7,10 @@ import com.jeremiahespinosa.anotherphotomanager.ui.fragments.home.HomeView;
  */
 public interface HomePresenter {
 
+    //function to get the images from the api call
     void getImagesFromCloud();
+
+    //set the callback to control ui elements
     void setHomeView(HomeView homeview);
     void destroyView();
 }

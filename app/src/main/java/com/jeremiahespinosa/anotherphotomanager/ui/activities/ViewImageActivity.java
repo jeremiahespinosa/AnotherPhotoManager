@@ -46,6 +46,7 @@ public class ViewImageActivity extends BaseActivity{
 
             setTitle(getString(R.string.album_number_formatted, album.getId()));
 
+            //ability to view all images in an album by setting images to be inside of a viewpager
             ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), album);
             imagesViewPager.setAdapter(mAdapter);
             imagesViewPager.setPageMargin((int) getResources().getDimension(R.dimen.activity_horizontal_margin));

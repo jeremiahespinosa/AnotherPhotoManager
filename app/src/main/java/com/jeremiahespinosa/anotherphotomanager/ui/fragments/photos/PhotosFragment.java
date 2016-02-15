@@ -27,7 +27,6 @@ import com.jeremiahespinosa.anotherphotomanager.util.SystemUtil;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import timber.log.Timber;
 
 /**
  * Created by jespinosa on 2/14/16.
@@ -54,6 +53,7 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
         return f;
     }
 
+    //trying to load photos from local storage
     public static PhotosFragment newInstance(boolean shouldLoadFromLocal) {
         PhotosFragment f = new PhotosFragment();
         Bundle b = new Bundle();
@@ -73,9 +73,9 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
         if(getArguments() != null && getArguments().containsKey(BaseConstants.ALBUM_EXTRA)){
             album = getArguments().getParcelable(BaseConstants.ALBUM_EXTRA);
 
+            //disable swipe to refresh since loading based on urls passed in
             main_swipe_refresh_layout.setEnabled(false);
 
-            //load based on urls passed in
             if(album != null && album.getPhotos() != null && album.getPhotos().size() > 0 ){
                 PhotosAdapter adapter = new PhotosAdapter(album.getPhotos(), this);
                 recyclerView.setAdapter(adapter);
@@ -83,7 +83,7 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
                 recyclerView.addItemDecoration(new GridItemDividerDecoration());
             }
             else{
-                //update the recylcerview
+                //no photos available
                 showEmptyLayout();
             }
         }
@@ -92,7 +92,6 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
                 loadFromLocal = getArguments().getBoolean(BaseConstants.PHOTO_LOCS_EXTRA, false);
 
                 if(loadFromLocal){
-                    Timber.i("loading from local");
                     loadFromLocal();
                 }
             }
@@ -136,6 +135,7 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
     @Override
     public void onDestroy() {
         super.onDestroy();
+        photosPresenter.destroyView();
     }
 
     @Override
@@ -157,7 +157,6 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
 
             for(String p : photos){
                 photosList.add(new Photo(1, "", p, p));
-
             }
 
             album.setPhotos(photosList);

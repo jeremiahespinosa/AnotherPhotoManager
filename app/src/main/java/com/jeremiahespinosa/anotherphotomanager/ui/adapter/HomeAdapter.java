@@ -11,6 +11,7 @@ import java.util.List;
  * Created by jespinosa on 2/13/16.
  */
 public class HomeAdapter extends FragmentPagerAdapter {
+    //holds the fragments on the home screen
 
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentTitles = new ArrayList<>();

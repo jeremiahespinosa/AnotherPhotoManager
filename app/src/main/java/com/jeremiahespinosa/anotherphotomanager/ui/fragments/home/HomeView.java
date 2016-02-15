@@ -10,7 +10,11 @@ import java.util.ArrayList;
  */
 public interface HomeView extends BaseView {
     void showError(String errorMessage);
+
+    //callback when albums are done being processed based on api call
     void viewLoaded(ArrayList<Album> albums);
+
+    //callback for when user taps an album to view the photos inside
     void onAlbumSelected(Album album);
 
 }

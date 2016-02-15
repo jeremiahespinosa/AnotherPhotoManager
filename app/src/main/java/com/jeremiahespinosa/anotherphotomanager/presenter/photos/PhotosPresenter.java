@@ -7,6 +7,8 @@ import com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos.PhotosView;
  */
 public interface PhotosPresenter {
     void getImagesFromLocal();
+
+    //set the callback to control ui elements
     void setHomeView(PhotosView photosView);
     void destroyView();
 }

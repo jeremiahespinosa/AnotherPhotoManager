@@ -87,6 +87,7 @@ public class PhotosPresenterImpl implements PhotosPresenter {
         public void onNext(ArrayList<String> photos) {
             photosView.hideProgressDialog();
 
+            //finished finding local photos
             photosView.onLocalPhotosLoaded(photos);
         }
     }

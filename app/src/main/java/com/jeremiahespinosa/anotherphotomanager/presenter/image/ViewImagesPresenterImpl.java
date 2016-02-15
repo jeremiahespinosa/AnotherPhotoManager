@@ -63,7 +63,6 @@ public class ViewImagesPresenterImpl implements ViewImagesPresenter{
                     e.printStackTrace();
                 }
 
-
                 return file;
             }
             })
@@ -91,6 +90,7 @@ public class ViewImagesPresenterImpl implements ViewImagesPresenter{
         public void onNext(File file) {
             imagesView.hideProgressDialog();
 
+            //file is done downloading
             imagesView.onImageDownloaded(file);
         }
     }

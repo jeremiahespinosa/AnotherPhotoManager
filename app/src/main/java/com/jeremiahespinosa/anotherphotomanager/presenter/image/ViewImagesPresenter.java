@@ -8,8 +8,12 @@ import com.jeremiahespinosa.anotherphotomanager.ui.fragments.image.ImagesView;
  */
 public interface ViewImagesPresenter {
 
+    //set the callback to control ui elements
     void setImagesView(ImagesView imagesView);
+
     void destroyView();
+
+    //function to download an image from the cloud
     void downloadImage(Photo photo);
 
 }
