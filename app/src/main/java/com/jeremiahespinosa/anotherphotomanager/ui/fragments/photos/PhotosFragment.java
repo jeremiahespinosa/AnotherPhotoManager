@@ -1,10 +1,10 @@
 package com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +17,8 @@ import com.jeremiahespinosa.anotherphotomanager.app.App;
 import com.jeremiahespinosa.anotherphotomanager.app.BaseConstants;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
-import com.jeremiahespinosa.anotherphotomanager.ui.activities.PhotosActivity;
 import com.jeremiahespinosa.anotherphotomanager.ui.activities.ViewImageActivity;
 import com.jeremiahespinosa.anotherphotomanager.ui.adapter.EmptyPhotosAdapter;
-import com.jeremiahespinosa.anotherphotomanager.ui.adapter.LocalPhotosAdapter;
 import com.jeremiahespinosa.anotherphotomanager.ui.adapter.PhotosAdapter;
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.base.BaseFragment;
 import com.jeremiahespinosa.anotherphotomanager.ui.widgets.GridItemDividerDecoration;
@@ -41,6 +39,9 @@ import timber.log.Timber;
  * Created by jespinosa on 2/14/16.
  */
 public class PhotosFragment extends BaseFragment implements PhotosView{
+
+    @Bind(R.id.main_swipe_refresh_layout)
+    SwipeRefreshLayout main_swipe_refresh_layout;
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -73,7 +74,7 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
 
         if(getArguments() != null && getArguments().containsKey(BaseConstants.ALBUM_EXTRA)){
             album = getArguments().getParcelable(BaseConstants.ALBUM_EXTRA);
-
+            main_swipe_refresh_layout.setEnabled(false);
             if(album != null && album.getPhotos() != null && album.getPhotos().size() > 0 ){
                 PhotosAdapter adapter = new PhotosAdapter(album.getPhotos(), this);
                 recyclerView.setAdapter(adapter);
@@ -96,6 +97,14 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
             }
             //load from local
         }
+
+        main_swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(loadFromLocal)
+                    loadFromLocal();
+            }
+        });
 
     }
 
@@ -145,6 +154,8 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
             public void onError(Throwable e) {
                 e.printStackTrace();
 
+                main_swipe_refresh_layout.setRefreshing(false);
+
                 hideProgressDialog();
 
                 showDialog("Error","Error downloading the image", true);
@@ -153,6 +164,8 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
             @Override
             public void onNext(ArrayList<String> photos) {
                 hideProgressDialog();
+
+                main_swipe_refresh_layout.setRefreshing(false);
 
                 if(photos != null && photos.size() >0){
                     localAlbum = new Album();
@@ -176,6 +189,8 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
                 else{
                     showEmptyLayout();
                 }
+
+
             }
         });
 
@@ -204,12 +219,5 @@ public class PhotosFragment extends BaseFragment implements PhotosView{
             SystemUtil.startActivity(getActivity(), intent, false);
         }
 
-    }
-
-    @Override
-    public void onPhotoClicked(String photo, int position) {
-
-        Intent intent = ViewImageActivity.intentInstance(getActivity(), localAlbum, position);
-        SystemUtil.startActivity(getActivity(), intent, false);
     }
 }

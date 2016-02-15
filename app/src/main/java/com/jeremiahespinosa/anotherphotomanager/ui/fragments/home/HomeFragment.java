@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jeremiahespinosa.anotherphotomanager.R;
-import com.jeremiahespinosa.anotherphotomanager.app.App;
+
 import com.jeremiahespinosa.anotherphotomanager.app.BaseConstants;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
 import com.jeremiahespinosa.anotherphotomanager.presenter.home.HomePresenter;
@@ -71,11 +71,6 @@ public class HomeFragment extends BaseFragment implements HomeView{
                 //load from cloud
                 startLoadingFromCloud();
             }
-            else{
-                Timber.i("loading from local");
-                //load from local
-                startLoadingFromLocal();
-            }
         }
     }
 
@@ -89,9 +84,7 @@ public class HomeFragment extends BaseFragment implements HomeView{
         homePresenter.getImagesFromCloud();
     }
 
-    private void startLoadingFromLocal(){
-        homePresenter.getImagesFromLocal();
-    }
+
 
     @Override
     public void showError(String errorMessage) {

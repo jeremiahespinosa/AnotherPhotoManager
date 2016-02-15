@@ -1,25 +1,19 @@
 package com.jeremiahespinosa.anotherphotomanager.presenter.home;
 
-import android.os.Environment;
 
-import com.jeremiahespinosa.anotherphotomanager.R;
-import com.jeremiahespinosa.anotherphotomanager.app.App;
 import com.jeremiahespinosa.anotherphotomanager.data.api.PhotoEntity;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.home.HomeView;
 import com.jeremiahespinosa.anotherphotomanager.util.network.ApiService;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -29,59 +23,6 @@ import timber.log.Timber;
 public class HomePresenterImpl implements HomePresenter  {
 
     private HomeView home;
-
-    @Override
-    public void getImagesFromLocal() {
-
-        final File locAlbum = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), App.getStringById(R.string.app_name).replace(" ", ""));
-
-        if (!locAlbum.mkdirs()) {
-            Timber.e("Directory not created");
-        }
-
-        Observable.just(locAlbum).map(new Func1<File, ArrayList<String>>() {
-                  @Override
-                  public ArrayList<String> call(File album) {
-
-                      ArrayList<String> photoLocations = new ArrayList<String>();
-
-                      File[] files = album.listFiles();
-
-                      for (File file : files) {
-                          if (file.isFile() && file.getName().toLowerCase().endsWith("jpg")) {
-                              //looking for jpgs
-                              photoLocations.add(file.getPath());
-                          }
-                      }
-                      return photoLocations;
-                  }
-          })
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<ArrayList<String>>() {
-            @Override
-            public void onCompleted() {
-                Timber.i("completed task");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-
-                home.hideProgressDialog();
-                home.showError("Error downloading the image");
-            }
-
-            @Override
-            public void onNext(ArrayList<String> photos) {
-                home.hideProgressDialog();
-
-//                imagesView.onImageDownloaded(file);
-            }
-        });
-
-    }
 
     @Override
     public void getImagesFromCloud() {

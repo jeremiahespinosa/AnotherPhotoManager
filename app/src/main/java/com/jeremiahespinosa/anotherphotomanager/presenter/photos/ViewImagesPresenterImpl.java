@@ -5,24 +5,19 @@ import android.os.Environment;
 import com.jeremiahespinosa.anotherphotomanager.R;
 import com.jeremiahespinosa.anotherphotomanager.app.App;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
-import com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos.ImagesView;
+import com.jeremiahespinosa.anotherphotomanager.ui.fragments.image.ImagesView;
 import com.jeremiahespinosa.anotherphotomanager.util.StorageUtils;
 
 import java.io.File;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.Subscriptions;
 import timber.log.Timber;
 
 

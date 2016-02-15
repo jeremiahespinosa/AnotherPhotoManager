@@ -1,7 +1,7 @@
 package com.jeremiahespinosa.anotherphotomanager.presenter.photos;
 
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
-import com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos.ImagesView;
+import com.jeremiahespinosa.anotherphotomanager.ui.fragments.image.ImagesView;
 
 /**
  * Created by jespinosa on 2/14/16.

@@ -6,19 +6,17 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+
 import com.jeremiahespinosa.anotherphotomanager.R;
 import com.jeremiahespinosa.anotherphotomanager.app.BaseConstants;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
-import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
 import com.jeremiahespinosa.anotherphotomanager.ui.adapter.ImagePagerAdapter;
 import butterknife.Bind;
 
 /**
  * Created by jespinosa on 2/13/16.
  */
-public class ViewImageActivity extends BaseActivity implements View.OnClickListener {
+public class ViewImageActivity extends BaseActivity{
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -54,38 +52,14 @@ public class ViewImageActivity extends BaseActivity implements View.OnClickListe
             imagesViewPager.setPageMargin((int) getResources().getDimension(R.dimen.activity_horizontal_margin));
             imagesViewPager.setOffscreenPageLimit(2);
 
-//            imagesViewPager.setOnSystemUiVisibilityChangeListener(
-//                    new View.OnSystemUiVisibilityChangeListener() {
-//                        @Override
-//                        public void onSystemUiVisibilityChange(int vis) {
-//                            if ((vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {
-//                                getSupportActionBar().hide();
-//                            } else {
-//                                getSupportActionBar().show();
-//                            }
-//                        }
-//                    });
-
             if (position != -1) {
                 imagesViewPager.setCurrentItem(position);
             }
         }
 
-        // Set up activity to go full screen
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     public void setToolbarColor(int color){
         mToolbar.setBackgroundColor(color);
-    }
-
-    @Override
-    public void onClick(View v) {
-//        final int vis = imagesViewPager.getSystemUiVisibility();
-//        if ((vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {
-//            imagesViewPager.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-//        } else {
-//            imagesViewPager.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
-//        }
     }
 }

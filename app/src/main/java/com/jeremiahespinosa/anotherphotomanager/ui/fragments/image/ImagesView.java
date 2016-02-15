@@ -1,4 +1,4 @@
-package com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos;
+package com.jeremiahespinosa.anotherphotomanager.ui.fragments.image;
 
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.base.BaseView;
 

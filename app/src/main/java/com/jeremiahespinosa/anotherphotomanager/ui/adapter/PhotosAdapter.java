@@ -1,7 +1,6 @@
 package com.jeremiahespinosa.anotherphotomanager.ui.adapter;
 
-import android.graphics.Bitmap;
-import android.support.v7.graphics.Palette;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
 import com.jeremiahespinosa.anotherphotomanager.R;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Photo;
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos.PhotosView;
@@ -49,21 +47,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         Glide.with(viewHolder.imagePreview.getContext())
                 .load(photo.getThumbnailUrl())
                 .asBitmap()
-                .into(new BitmapImageViewTarget(viewHolder.imagePreview) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        super.onResourceReady(resource, glideAnimation);
-                        Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-                            @Override
-                            public void onGenerated(Palette palette) {
-                                Palette.Swatch vibrant = palette.getVibrantSwatch();
-                                if (vibrant != null) {
-                                    viewHolder.imagePreview.setBackgroundColor(vibrant.getRgb());
-                                }
-                            }
-                        });
-                    }
-                });
+                .placeholder(R.color.divider)
+                .into(viewHolder.imagePreview);
 
         viewHolder.bindPhoto(photo, position);
     }

@@ -1,7 +1,5 @@
 package com.jeremiahespinosa.anotherphotomanager.ui.adapter;
 
-import android.graphics.Bitmap;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.jeremiahespinosa.anotherphotomanager.R;
 import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
 import com.jeremiahespinosa.anotherphotomanager.ui.fragments.home.HomeView;
 
 import java.util.ArrayList;
 
-import timber.log.Timber;
 
 /**
  * Created by jespinosa on 2/13/16.
@@ -50,21 +45,8 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         Glide.with(viewHolder.imageView.getContext())
                 .load(album.getPhotos().get(0).getThumbnailUrl())
                 .asBitmap()
-                .into(new BitmapImageViewTarget(viewHolder.imageView){
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        super.onResourceReady(resource, glideAnimation);
-                        Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-                            @Override
-                            public void onGenerated(Palette palette) {
-                                Palette.Swatch vibrant = palette.getVibrantSwatch();
-                                if(vibrant != null){
-                                    viewHolder.imageView.setBackgroundColor(vibrant.getRgb());
-                                }
-                            }
-                        });
-                    }
-                });
+                .placeholder(R.color.divider)
+                .into(viewHolder.imageView);
 
         viewHolder.bindAlbum(album);
     }

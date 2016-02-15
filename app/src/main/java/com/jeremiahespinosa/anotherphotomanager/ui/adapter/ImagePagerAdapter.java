@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.jeremiahespinosa.anotherphotomanager.data.models.Album;
-import com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos.ViewImagesFragment;
+import com.jeremiahespinosa.anotherphotomanager.ui.fragments.image.ViewImagesFragment;
 
 /**
  * Created by jespinosa on 2/14/16.

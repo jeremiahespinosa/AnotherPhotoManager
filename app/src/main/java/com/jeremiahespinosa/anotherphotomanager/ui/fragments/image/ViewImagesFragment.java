@@ -1,4 +1,4 @@
-package com.jeremiahespinosa.anotherphotomanager.ui.fragments.photos;
+package com.jeremiahespinosa.anotherphotomanager.ui.fragments.image;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -53,6 +53,7 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
     FloatingActionButton fab;
 
     ViewImagesPresenter viewImagesPresenter;
+
     private Photo photo;
 
     public static ViewImagesFragment newInstance(Photo photo) {

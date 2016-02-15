@@ -8,5 +8,4 @@ import com.jeremiahespinosa.anotherphotomanager.ui.fragments.base.BaseView;
  */
 public interface PhotosView extends BaseView {
     void onPhotoClicked(Photo photo, int position);
-    void onPhotoClicked(String photo, int position);
 }
