@@ -1,6 +1,8 @@
 package com.jeremiahespinosa.anotherphotomanager.ui.fragments.image;
 
 import android.Manifest;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -43,6 +45,7 @@ import timber.log.Timber;
 public class ViewImagesFragment extends BaseFragment implements ImagesView {
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL = 2;
+
     @Bind(R.id.photoTitleTextView)
     TextView photoTitleTextView;
 
@@ -97,11 +100,27 @@ public class ViewImagesFragment extends BaseFragment implements ImagesView {
                                 Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(Palette palette) {
+
                                         Palette.Swatch vibrant = palette.getDarkMutedSwatch();
 
-                                        if (vibrant != null) {
-                                            window.setStatusBarColor(vibrant.getRgb());
-                                            ((ViewImageActivity) getActivity()).setToolbarColor(vibrant.getRgb());
+                                        if (vibrant != null && window != null) {
+
+                                            int colorFrom = window.getStatusBarColor();
+                                            int colorTo = vibrant.getRgb();
+
+                                            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                                            colorAnimation.setDuration(250); // milliseconds
+                                            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                                @Override
+                                                public void onAnimationUpdate(ValueAnimator animator) {
+                                                    window.setStatusBarColor((int) animator.getAnimatedValue());
+                                                    ((ViewImageActivity) getActivity()).setToolbarColor((int) animator.getAnimatedValue());
+                                                }
+
+                                            });
+                                            colorAnimation.start();
+
                                         }
                                     }
                                 });
