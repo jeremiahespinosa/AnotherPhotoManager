@@ -42,12 +42,15 @@ public class PhotosPresenterImpl implements PhotosPresenter {
 
                 File[] files = album.listFiles();
 
-                for (File file : files) {
-                    if (file.isFile() && file.getName().toLowerCase().endsWith("jpg") && file.length() > 0) {
-                        //looking for jpgs
-                        photoLocations.add(file.getPath());
+                if(files != null && files.length > 0){
+                    for (File file : files) {
+                        if (file.isFile() && file.getName().toLowerCase().endsWith("jpg") && file.length() > 0) {
+                            //looking for jpgs
+                            photoLocations.add(file.getPath());
+                        }
                     }
                 }
+
                 return photoLocations;
             }
         })
