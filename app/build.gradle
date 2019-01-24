@@ -54,6 +54,10 @@ android {
             dimension "server"
             applicationId 'com.jeremiahespinosa.anotherphotomanager.feature2'
         }
+        flave{
+            dimension "server"
+            applicationId 'com.jeremiahespinosa.anotherphotomanager.flave'
+        }
     }
 
     packagingOptions {
