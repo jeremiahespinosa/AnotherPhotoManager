@@ -13,8 +13,46 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            pseudoLocalesEnabled false
+        }
+        debug {
+            testCoverageEnabled false
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "server"
+
+    productFlavors {
+        development {
+            dimension "server"
+            applicationId "com.jeremiahespinosa.anotherphotomanager"
+        }
+        qa {
+            dimension "server"
+            applicationId "com.jeremiahespinosa.anotherphotomanager.qa"
+        }
+        beta {
+            dimension "server"
+            applicationId "com.jeremiahespinosa.anotherphotomanager.beta"
+        }
+        production {
+            dimension "server"
+            applicationId "com.jeremiahespinosa.anotherphotomanager"
+        }
+        feature1 {
+            dimension "server"
+            applicationId 'com.jeremiahespinosa.anotherphotomanager.feature1'
+        }
+        feature2 {
+            dimension "server"
+            applicationId 'com.jeremiahespinosa.anotherphotomanager.feature2'
         }
     }
 
